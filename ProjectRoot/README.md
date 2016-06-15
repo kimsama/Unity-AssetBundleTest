@@ -94,9 +94,9 @@ Unity 프로젝트에 대해서 여러 개의 Unity 에디터가 접근하는 �
       | -ProjectSettings ( WorkingProject/ProjectSettings의 심볼릭 링크 )
 ```
 
-Working 프로젝토 폴더는 실제 작업이 이루어지는 폴더이고 iOS/Assets, iOS/ProjectSettings 폴더 및 Android/Assets, Android/ProjectSettings 폴더는 Working 프로젝트의 각 폴더의 심볼릭 링크로 만들어진 폴더이다. 
+Working 프로젝토 폴더는 실제 작업이 이루어지는 폴더이고 *iOS/Assets*, *iOS/ProjectSettings* 폴더 및 *Android/Assets*, *Android/ProjectSettings* 폴더는 Working 프로젝트의 각 폴더의 심볼릭 링크로 만들어진 폴더이다. 
 
-심볼릭 링크를 이용해서 플랫폼마다 폴더를 구성한 다음 반드시 Unity 에디터를 실행 시켜 각각의 프로젝트에서 빌드 설정(Build Settings)에서 해당 플랫폼으로 변경하도록 한다. 
+**주의!** 심볼릭 링크를 이용해서 플랫폼마다 폴더를 구성한 다음 반드시 Unity 에디터를 실행 시켜 각각의 프로젝트에서 빌드 설정(Build Settings)에서 해당 플랫폼으로 변경하도록 한다. 
 
 
 윈도우즈에서 심볼릭 링크 만들기
@@ -109,7 +109,7 @@ Working 프로젝토 폴더는 실제 작업이 이루어지는 폴더이고 iOS
 mklink /d(디렉토리 옵션) 대상폴더(혹은 파일) 원본폴더(혹은 파일)
 ```
 
-디렉토리의 경우와 파일의 경우로 구분해서 사용한다. 디렉토리의 경우 /d 옵션이 필요하다. 명령행 창(command-line console)을 관리자 권한으로 열어 실행한다. 
+디렉토리의 경우와 파일의 경우로 구분해서 사용한다. 디렉토리의 경우 /d 옵션이 필요하다. 명령행 창(command-line console)을 **관리자 권한**으로 열어 실행한다. 
 
 디렉토리 심볼릭 링크를 이용해서 'Working\Assets' 폴더를 'iOS\Assets' 폴더로 링크한다. 
 ```
