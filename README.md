@@ -91,22 +91,24 @@ static void  AssetbundleBuilder  ()
 symbolic link를 시용해서 여러 개의 Unity 에디터로 에셋 번들을 빌드하는 방법. 
 
 ```
-BaseProject
+   Working
       | - Assets
       | - Library
       | - ProjectSettings
-iOS-Build
-      | -Assets (BaseProject / Assets의 심볼릭 링크 )
+     iOS
+      | -Assets ( Working/Assets의 심볼릭 링크 )
       | -Library
-      | -ProjectSettings (BaseProject / ProjectSettings의 심볼릭 링크 )
-iOS-Build2
-      | -Assets (BaseProject / Assets의 심볼릭 링크 )
-      | -Library ( iOS Build / Library의 심볼릭 링크 )
-      | -ProjectSettings (BaseProject / ProjectSettings의 심볼릭 링크 )
+      | -ProjectSettings ( Working/ProjectSettings의 심볼릭 링크 )
+   Android
+      | -Assets ( Working/Assets의 심볼릭 링크 )
+      | -Library 
+      | -ProjectSettings ( WorkingProject/ProjectSettings의 심볼릭 링크 )
 ```
 
+Working 프로젝토 폴더는 실제 작업이 이루어지는 폴더로 iOS/Assets, iOS/ProjectSettings 폴더 및 Android/Assets, Android/ProjectSettings 폴더는 Working 프로젝트의 각 폴더의 심볼릭 링크로 만들어진 폴더이다. 
+
 윈도우즈에서 심볼릭 링크 만들기
-===============================
+-------------------------------
 
 윈도우즈에서도 mklink를 이용하면 Unix에서처럼 심볼릭 링크를 사용할 수 있다. 
 
@@ -125,3 +127,27 @@ mklink /d(디렉토리 옵션) 대상폴더(혹은 파일) 원본폴더(혹은 �
 ```
 > mklink d:\dev\Unity 5.3.5\Editor\Unity.exe c:\Proram Files\Unity\Editor\Unity.exe
 ```
+
+에셋 번들 빌드를 위해서 에셋 번들을 빌드하는 에디터 스크립트를 다음과 같이 작성한다. 
+```
+public class ExportAssetbundle
+{
+    [MenuItem("Export/Assetbundle")]
+    public static void Export()
+    {
+        // Note we don't put the assetbundle under the ./Assets/ project folder
+        // because the project folder is already linked with symbolic link.
+        string path = Application.dataPath + "/../Bundles/";
+
+        // See the directory is exist, if not, it makes a new one.
+        if (!Directory.Exists(path))
+            Directory.CreateDirectory(path);
+
+        // Build assetbundles
+        BuildPipeline.BuildAssetBundles(path);
+    }
+}
+```
+
+iOS와 Android의 Assets 폴더는 심볼릭 링크로 만들어진 폴더이므로 에셋 번들 빌드시 빌드한 에셋 번들이 Assets/ 폴더 아래에 만들어지지 않도록 주의한다.
+
