@@ -96,7 +96,7 @@ Unity 프로젝트에 대해서 여러 개의 Unity 에디터가 접근하는 �
 
 Working 프로젝토 폴더는 실제 작업이 이루어지는 폴더이고 *iOS/Assets*, *iOS/ProjectSettings* 폴더 및 *Android/Assets*, *Android/ProjectSettings* 폴더는 Working 프로젝트의 각 폴더의 심볼릭 링크로 만들어진 폴더이다. 
 
-~~**주의!** 심볼릭 링크를 이용해서 플랫폼마다 폴더를 구성한 다음 반드시 Unity 에디터를 실행 시켜 각각의 프로젝트에서 빌드 설정(Build Settings)에서 해당 플랫폼으로 변경하도록 한다.~~
+~~**주의!** 심볼릭 링크를 이용해서 플랫폼마다 폴더를 구성한 다음 반드시 Unity 에디터를 실행 시켜 각각의 프로젝트에서 빌드 설정(Build Settings)에서 해당 플랫폼으로 변경하도록 한다.~~ 타겟 빌드의 설정은 Unity 에디터를 배치모드로 실행할 때 *-buildTarget* 옵션으로 해당 빌드타겟을 지정한다.
 
 
 윈도우즈에서 심볼릭 링크 만들기
