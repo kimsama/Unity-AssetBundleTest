@@ -110,6 +110,8 @@ mklink /d(디렉토리 옵션) 대상폴더(혹은 파일) 원본폴더(혹은 �
 > mklink /d d:\github\Unity-AssetBundleTest\ProjectRoot\iOS\Assets d:\github\Unity-AssetBundleTest\ProjectRoot\Working\Assets
 ```
 
+커맨드 라인 명령창에서 Unity 에디터 실행하기
+--------------------------------------------
 
 다음으로는 커맨더 라인 에디터에서 Unity 에디터를 실행하는 방법에 대해서 살펴 보자. 커맨더 라인 명령창에서 Unity 에디터는 다음의 방법으로 실행할 수 있다.
 ```
@@ -121,20 +123,9 @@ mklink /d(디렉토리 옵션) 대상폴더(혹은 파일) 원본폴더(혹은 �
  * -executeMethod [호출할 함수] - *Editor* 폴더 아래에 위치한 에디터 스크립터의 정적함수만 호출 가능.
  * -projectPath [프로젝트 경로] - 실행할 Unity 프로젝트의 경로.
 
-```csharp
-static void  AssetbundleBuilder  () 
-{ 
-    ...
-    BuildPipeline.BuildAssetBundle ( 
-                obj,  
-                new  Object{ obj }  
-                string.Format ( " AB / {0} {1} .pack " ,  obj . name ,  EditorUserBuildSettings.activeBuildTarget ) 
-                BuildAssetBundleOptions.CollectDependencies,  
-                EditorUserBuildSettings.activeBuildTarget); 
-}
-```
 
-에셋 번들 빌드를 위해서 에셋 번들을 빌드하는 에디터 스크립트를 다음과 같이 작성한다. 
+에셋 번들 빌드를 위해서 에셋 번들을 빌드하는 에디터 스크립트를 다음과 같이 작성한다. 이 에디터 스크립트 함수는 커맨드 라인 명령창에서 Unity 에디터를 실행할 때 -executeMethod 인자로 호출하는 함수이다.
+
 ``` csharp
 public class ExportAssetbundle
 {
