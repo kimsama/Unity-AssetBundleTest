@@ -28,28 +28,73 @@ foreach (  var  obj  in  objects  )
 { 
     //  Android 용 플랫폼 전환이 발생 
     BuildPipeline.BuildAssetBundle  ( obj ,  new  Object { obj }  
-    string.Format ( " AB / {0} android .pack " ,  obj . name ) 
-    BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . Android ); 
+        string.Format ( " AB / {0} android .pack " ,  obj . name ) 
+        BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . Android ); 
     
     //  iOS 용으로 플랫폼 전환이 발생 
     BuildPipeline.BuildAssetBundle  ( obj ,  new  Object{ obj }  
-    string.Format ( " AB / {0} iOS .pack " ,  obj . name ) 
-    BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . iPhone ); 
+        string.Format ( " AB / {0} iOS .pack " ,  obj . name ) 
+        BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . iPhone ); 
 }
 ```
+플랫폼별로 에셋번들 빌드.
 
 ```
 foreach (  var  obj  in  objects  ) 
 { 
     BuildPipeline.BuildAssetBundle  ( obj ,  new  Object { obj }  
-    string.Format ( " AB / {0} android .pack " ,  obj . name )
-    BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . Android ); 
+        string.Format ( " AB / {0} android .pack " ,  obj . name )
+        BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . Android ); 
 } 
 
 foreach (  var  obj  in  objects  ) 
 { 
     BuildPipeline.BuildAssetBundle  ( obj ,  new  Object{ obj }  
-    string.Format ( " AB / {0} iOS .pack " ,  obj . name ) 
-    BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . Android ); 
+        string.Format ( " AB / {0} iOS .pack " ,  obj . name ) 
+        BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . iPhone ); 
 }
 ```
+
+커맨더 라인 에디터에서 Unity 에디터를 실행, 에셋 번들 빌드 시간을 단축하는 방법.
+
+우선 커맨더 라인 명령창에서 Unity 에디터를 실행하는 방법
+```
+> Unity.exe -buildTarget [플랫폼] -quit -batchmode -executeMethod [호출할 함수] -projectPath [프로젝트 경로]
+```
+
+ * -buildTarget [플랫폼] 
+ * -quit 
+ * -batchmode 
+ * -executeMethod [호출할 함수] 
+ * -projectPath [프로젝트 경로]
+
+```
+static void  AssetbundleBuilder  () 
+{ 
+    ...
+    BuildPipeline.BuildAssetBundle ( 
+                obj,  
+                new  Object{ obj }  
+                string.Format ( " AB / {0} {1} .pack " ,  obj . name ,  EditorUserBuildSettings.activeBuildTarget ) 
+                BuildAssetBundleOptions.CollectDependencies,  
+                EditorUserBuildSettings.activeBuildTarget); 
+}
+```
+
+symbolic link를 시용해서 여러 개의 Unity 에디터로 에셋 번들을 빌드하는 방법. 
+
+```
+BaseProject
+      | - Assets
+      | - Library
+      | - ProjectSettings
+iOS Build
+      | -Assets (BaseProject / Assets의 심볼릭 링크 )
+      | -Library
+      | -ProjectSettings (BaseProject / ProjectSettings의 심볼릭 링크 )
+iOS Build2
+      | -Assets (BaseProject / Assets의 심볼릭 링크 )
+      | -Library ( iOS Build / Library의 심볼릭 링크 )
+      | -ProjectSettings (BaseProject / ProjectSettings의 심볼릭 링크 )
+```
+
