@@ -107,6 +107,9 @@ symbolic link를 시용해서 여러 개의 Unity 에디터로 에셋 번들을 
 
 Working 프로젝토 폴더는 실제 작업이 이루어지는 폴더로 iOS/Assets, iOS/ProjectSettings 폴더 및 Android/Assets, Android/ProjectSettings 폴더는 Working 프로젝트의 각 폴더의 심볼릭 링크로 만들어진 폴더이다. 
 
+심볼릭 링크를 이용해서 플랫폼마다 폴더를 구성한 다음 반드시 Unity 에디터를 실행 시켜 각각의 프로젝트에서 빌드 설정(Build Settings)에서 해당 플랫폼으로 변경하도록 한다. 
+
+
 윈도우즈에서 심볼릭 링크 만들기
 -------------------------------
 
@@ -150,4 +153,18 @@ public class ExportAssetbundle
 ```
 
 iOS와 Android의 Assets 폴더는 심볼릭 링크로 만들어진 폴더이므로 에셋 번들 빌드시 빌드한 에셋 번들이 Assets/ 폴더 아래에 만들어지지 않도록 주의한다.
+
+각 플랫폼 에셋 번들의 빌드는 배치 파일을 만들어서 실행하면 편리하다. 
+
+
+```
+rem Build iOS platform assetbundles under the ./iOS/Bundles directory.
+
+set PRJ_PATH=%cd%\iOS
+@echo %PRJ_PATH%
+
+Unity.exe -quit -batchmode -executeMethod ExportAssetbundle.Export -projectPath %PRJ_PATH%
+```
+
+배치파일들은 ProjectRoot 폴더 아래에 플랫폼별 배치파일들을 찾을 수 있다. 
 
