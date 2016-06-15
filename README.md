@@ -16,3 +16,40 @@ Unity 프로젝트에 대해서 여러 개의 Unity 에디터가 접근하는 �
 Temp 폴더와 Library 폴더를 공유하지 않으면 여러 개의 Unity 에디터로 하나의 Unity 프로젝트를 병렬 처리하는 하는 것이 가능하다. 
 
 
+
+
+AssetBundle 빌드
+================
+
+플롯폼 전환시 매우 많은 시간이 소요!
+
+```
+foreach (  var  obj  in  objects  ) 
+{ 
+    //  Android 용 플랫폼 전환이 발생 
+    BuildPipeline.BuildAssetBundle  ( obj ,  new  Object { obj }  
+    string.Format ( " AB / {0} android .pack " ,  obj . name ) 
+    BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . Android ); 
+    
+    //  iOS 용으로 플랫폼 전환이 발생 
+    BuildPipeline.BuildAssetBundle  ( obj ,  new  Object{ obj }  
+    string.Format ( " AB / {0} iOS .pack " ,  obj . name ) 
+    BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . iPhone ); 
+}
+```
+
+```
+foreach (  var  obj  in  objects  ) 
+{ 
+    BuildPipeline.BuildAssetBundle  ( obj ,  new  Object { obj }  
+    string.Format ( " AB / {0} android .pack " ,  obj . name )
+    BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . Android ); 
+} 
+
+foreach (  var  obj  in  objects  ) 
+{ 
+    BuildPipeline.BuildAssetBundle  ( obj ,  new  Object{ obj }  
+    string.Format ( " AB / {0} iOS .pack " ,  obj . name ) 
+    BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . Android ); 
+}
+```
