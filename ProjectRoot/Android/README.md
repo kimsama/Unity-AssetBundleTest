@@ -1,0 +1,1 @@
+symbolic linked *'Assets'* and *'ProjectSettings'* folder are located here
