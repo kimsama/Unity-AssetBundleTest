@@ -121,14 +121,16 @@ mklink /d(디렉토리 옵션) 대상폴더(혹은 파일) 원본폴더(혹은 �
 
 다음으로는 커맨더 라인 에디터에서 Unity 에디터를 실행하는 방법에 대해서 살펴 보자. 커맨더 라인 명령창에서 Unity 에디터는 다음의 방법으로 실행할 수 있다.
 ```
-> Unity.exe -quit -batchmode -executeMethod [호출할 함수] -projectPath [프로젝트 경로]
+> Unity.exe -quit -batchmode -buildTarget [빌드타겟] -executeMethod [호출할 함수] -projectPath [프로젝트 경로]
 ```
 
  * -quit - 실행후 에디터를 종료. 
  * -batchmode - 에디터를 배치모드로 실행.
+ * -builderTarget - 빌드 타겟
  * -executeMethod [호출할 함수] - *Editor* 폴더 아래에 위치한 에디터 스크립터의 정적함수만 호출 가능.
  * -projectPath [프로젝트 경로] - 실행할 Unity 프로젝트의 경로.
 
+CommandLine-Argument들은 [여기](http://docs.unity3d.com/Manual/CommandLineArguments.html)에서 참조.
 
 에셋 번들 빌드를 위해서 에셋 번들을 빌드하는 에디터 스크립트를 다음과 같이 작성한다. 이 에디터 스크립트 함수는 커맨드 라인 명령창에서 Unity 에디터를 실행할 때 -executeMethod 인자로 호출하는 함수이다.
 
@@ -163,7 +165,7 @@ rem Build iOS platform assetbundles under the ./iOS/Bundles directory.
 set PRJ_PATH=%cd%\iOS
 @echo %PRJ_PATH%
 
-Unity.exe -quit -batchmode -executeMethod ExportAssetbundle.Export -projectPath %PRJ_PATH%
+Unity.exe -quit -batchmode -buildTarget iOS -executeMethod ExportAssetbundle.Export -projectPath %PRJ_PATH%
 ```
 
 배치파일들은 ProjectRoot 폴더 아래에 플랫폼별 배치파일들을 찾을 수 있다. 
