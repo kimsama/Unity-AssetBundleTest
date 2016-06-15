@@ -6,9 +6,9 @@
 AssetBundle 빌드
 ================
 
-에셋 번들은 플랫폼마다 별도의 에셋 번들을 빌드해야 하는데 하나의 프로젝트 폴더 내에서 에셋 번들을 빌드시 플랫폼 전환이 필요한데, 큰 프로젝트의 경우에는 플랫폼 전환시 매우 긴 시간이 소요된다.  
+에셋 번들은 플랫폼마다 별도의 에셋 번들을 빌드해야 하는데 하나의 프로젝트 폴더 내에서 에셋 번들을 빌드하는 경우 플랫폼마다 플랫폼 전환이 필요하다. 문제는 큰 프로젝트의 경우에는 이 플랫폼 전환에 매우 긴 시간이 소요된다는 점이다.  (프로젝트가 아주 큰 경우라면 몇 시간이 소요될 수도 있다!)
 
-아래와 같이 에셋 번들을 빌드하는 에디터 스크립트를 작성시 각 에셋마다 플롯폼 전환을 하므로 아래와 같이 작성하지 않도록 해야 한다.
+아래와 같이 에셋 번들을 빌드하는 에디터 스크립트를 작성하는 경우 각 에셋마다 플롯폼 전환을 하므로 이와 같이 작성하지는 않도록 해야 한다.
 
 ```csharp
 // 개별 obj 마다 플랫폼 전환이 발생
@@ -26,14 +26,14 @@ foreach (  var  obj  in  objects  )
 }
 ```
 
-보통 빌드시 플랫폼별로 에셋번들을 모두 빌드해야 하므로 필요한 플랫폼마다 순차적으로 에셋 번들을 빌드하는 스크립트의 작성이 필요하다. 위의 경우보다는 빠르지만 이 경우에도 여전히 플랫폼 스위칭이 필하다. 
+보통 빌드시 플랫폼별로 에셋번들을 모두 빌드해야 하므로 아래와 같이 플랫폼마다 순차적으로 에셋 번들을 빌드하는 스크립트를 작성하게 된다..  
 
 ```csharp
 foreach (  var  obj  in  objects  ) 
 { 
     BuildPipeline.BuildAssetBundle  ( obj ,  new  Object { obj }  
         string.Format ( " AB / {0} android .pack " ,  obj . name )
-        BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . Android ); 
+        BuildAssetBundleOptions.CollectDependencies ,  BuildTarget.Android ); 
 } 
 
 // Android 플랫폼으로 번들 빌드후 iOS 플랫폼 전환
@@ -42,9 +42,12 @@ foreach (  var  obj  in  objects  )
 { 
     BuildPipeline.BuildAssetBundle  ( obj ,  new  Object{ obj }  
         string.Format ( " AB / {0} iOS .pack " ,  obj . name ) 
-        BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . iPhone ); 
+        BuildAssetBundleOptions.CollectDependencies ,  BuildTarget.iPhone ); 
 }
 ```
+
+맨 처음 경우보다는 빠르지만 이 경우에도 여전히 플랫폼 스위칭을 한다.
+
 
 프로젝트의 크기가 큰 경우, 바꾸어 이야기하면 프로젝트에 에셋 번들로 빌드해야 할 파일들이 매우 많은 경우에는 플랫폼 전환시 만만치않은 시간이 소요되기 때문에 플랫폼 전환 없이 빌드할 수 있다면 빌드 시간을 줄이는데 큰 도움이 될 것이다.
 
@@ -54,15 +57,15 @@ foreach (  var  obj  in  objects  )
 
 여러 개의 Unity 에디터가 하나의 Unity 프로젝트 폴더에 접근할 수 없는 이유는 Unity 프로젝트 폴더의 *Temp*와 *Library* 폴더 때문이다. 
 
- * Temp - Unity 에디터의 시작 및 종료시 에디터 실행과 관련한 정보들을 담고 있는 폴더
- * Library - 플랫폼별 관련한 내용들을 저장하고 있는 폴더로 플롯폼 변환시 폴더의 내용도 함께 변경된다.
+ * **Temp** - Unity 에디터의 시작 및 종료시 에디터 실행과 관련한 정보들을 담고 있는 폴더
+ * **Library** - 플랫폼별 관련한 내용들을 저장하고 있는 폴더로 플롯폼 변환시 폴더의 내용도 함께 변경된다.
 
-Unity 프로젝트에 대해서 여러 개의 Unity 에디터가 접근하는 경우 Temp 폴더와 Library 폴더에 여러 개의 Unity 에디터가 동시에 접근하는 경우 쓰기 오류가 발생한다. 
+Unity 프로젝트에 대해서 여러 개의 Unity 에디터가 접근하는 경우 *Temp* 폴더와 *Library* 폴더에 여러 개의 Unity 에디터가 동시에 접근하는 경우 쓰기 오류가 발생한다. 
 
 해결책
 ------
  
-Temp 폴더와 Library 폴더를 공유하지 않으면 플랫폼 스위칭이 필요하지 않을 뿐만 아니라 여러 개의 Unity 에디터로 하나의 Unity 프로젝트를 병렬 처리하는 하는 것도 가능하다. 
+*Temp* 폴더와 *Library* 폴더를 공유하지 않으면 플랫폼 스위칭이 필요하지 않을 뿐만 아니라 여러 개의 Unity 에디터로 하나의 Unity 프로젝트를 병렬 처리하는 하는 것도 가능하다. 
 
 이상의 사실로 플랫폼마다 미리 Library 폴더를 만들어 둔 다음 심볼릭 링크를 이용하면 실제 작업은 하나의 Unity 프로젝트 폴더 내에서 처리하고 에셋 번들 빌드시에는 플랫폼 스위칭 없이 빌드하는 것이 가능하다. 
 
