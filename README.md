@@ -24,6 +24,7 @@ AssetBundle 빌드
 플롯폼 전환시 매우 많은 시간이 소요!
 
 ```
+// 개별 obj 마다 플랫폼 전환이 발생
 foreach (  var  obj  in  objects  ) 
 { 
     //  Android 용 플랫폼 전환이 발생 
@@ -37,7 +38,7 @@ foreach (  var  obj  in  objects  )
         BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . iPhone ); 
 }
 ```
-플랫폼별로 에셋번들 빌드.
+플랫폼별로 에셋번들을 빌드하는 쪽이 유리하다. 이 경우에도 플랫폼 전환시에는 전환에 따른 시간이 소요되긴 하지만 이전에 비해서는 빠르다.
 
 ```
 foreach (  var  obj  in  objects  ) 
@@ -47,6 +48,8 @@ foreach (  var  obj  in  objects  )
         BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . Android ); 
 } 
 
+// Android 플랫폼으로 번들 빌드후 iOS 플랫폼 전환
+
 foreach (  var  obj  in  objects  ) 
 { 
     BuildPipeline.BuildAssetBundle  ( obj ,  new  Object{ obj }  
@@ -54,6 +57,7 @@ foreach (  var  obj  in  objects  )
         BuildAssetBundleOptions.CollectDependencies ,  BuildTarget . iPhone ); 
 }
 ```
+
 
 커맨더 라인 에디터에서 Unity 에디터를 실행, 에셋 번들 빌드 시간을 단축하는 방법.
 
@@ -88,11 +92,11 @@ BaseProject
       | - Assets
       | - Library
       | - ProjectSettings
-iOS Build
+iOS-Build
       | -Assets (BaseProject / Assets의 심볼릭 링크 )
       | -Library
       | -ProjectSettings (BaseProject / ProjectSettings의 심볼릭 링크 )
-iOS Build2
+iOS-Build2
       | -Assets (BaseProject / Assets의 심볼릭 링크 )
       | -Library ( iOS Build / Library의 심볼릭 링크 )
       | -ProjectSettings (BaseProject / ProjectSettings의 심볼릭 링크 )
